@@ -1,0 +1,59 @@
+app: sls-typescript-template
+service: demo
+useDotenv: true
+
+plugins:
+  - serverless-deployment-bucket
+  - serverless-stage-manager
+  - serverless-prune-plugin
+  - serverless-webpack
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage, 'dev'}
+  region: "us-east-1"
+  lambdaHashingVersion: 20201221
+  profile: "demo"
+  memorySize: 128
+  timeout: 240
+  logRetentionInDays: 60
+
+  deploymentBucket:
+    name: demo-serverless-deploy
+    serverSideEncryption: AES256
+    versioning: true
+    blockPublicAccess: true
+  environment:
+    SERVICE_NAME: ${self:app}
+    STAGE: ${self:provider.stage}
+
+functions:
+  main:
+    handler: src/index.handler
+    name: ${self:service}-${self:app}-${sls:stage}
+    description: "Function lambda for test"
+    events:
+      - schedule:
+          rate:
+            - cron(20/30 * * * ? *)
+
+package:
+  individually: true
+  patterns:
+    - "!node_modules/**"
+    - "!events/**"
+
+custom:
+  stages:
+    - dev
+    - prod
+  prune:
+    automatic: true
+    number: 3
+  webpack:
+    webpackConfig: "webpack.config.js"
+    packager: "npm"
+    includeModules: true
+  vars:
+    DEMO: 'VARIABLE_DEMO'

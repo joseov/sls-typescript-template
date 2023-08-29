@@ -1,0 +1,4 @@
+
+```
+sls invoke local -f main --path events/s3.json
+```

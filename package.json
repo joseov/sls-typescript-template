@@ -1,0 +1,44 @@
+{
+  "name": "sls-typescript-template",
+  "version": "1.0.0",
+  "description": "Function lambda for test",
+  "author": "WiTI <jose.velasquez@witi.cl>",
+  "license": "MIT",
+  "main": "src/index.js",
+  "scripts": {
+    "start:dev": "sls invoke local -f main --stage dev --path events/sqs.json",
+    "start:prod": "sls invoke local -f main --stage prod --path events/s3.json",
+    "deploy:dev": "sls deploy --aws-profile demo --stage dev",
+    "deploy:prod": "sls deploy --aws-profile demo --stage prod"
+  },
+  "dependencies": {
+    "@aws-lambda-powertools/logger": "^1.7.0",
+    "@aws-lambda-powertools/tracer": "^1.7.0",
+    "aws-lambda": "^1.0.7",
+    "aws-sdk": "^2.1447.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.3",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-typescript": "^7.21.0",
+    "@types/aws-lambda": "^8.10.114",
+    "@types/node": "^18.15.11",
+    "@typescript-eslint/eslint-plugin": "^5.56.0",
+    "@typescript-eslint/parser": "^5.56.0",
+    "babel-loader": "^9.1.2",
+    "eslint": "^8.36.0",
+    "eslint-config-prettier": "^8.8.0",
+    "fork-ts-checker-webpack-plugin": "^8.0.0",
+    "prettier": "^2.8.7",
+    "serverless": "^3.29.0",
+    "serverless-deployment-bucket": "^1.6.0",
+    "serverless-offline": "^12.0.4",
+    "serverless-prune-plugin": "^2.0.2",
+    "serverless-stage-manager": "^1.0.5",
+    "serverless-webpack": "^5.11.0",
+    "terser-webpack-plugin": "^5.3.7",
+    "typescript": "^5.0.2",
+    "webpack": "^5.76.3",
+    "webpack-node-externals": "^3.0.0"
+  }
+}
